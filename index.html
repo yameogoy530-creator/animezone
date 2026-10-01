@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f4f5ef"><meta name="description" content="Explore les animes du moment et garde tes coups de cœur.">
+  <title>Otaku Club — anime & manga</title>
+  <link rel="preconnect" href="https://api.jikan.moe"><link rel="preconnect" href="https://cdn.myanimelist.net">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/site.css"><link rel="stylesheet" href="css/components.css"><script type="module" src="js/main.js"></script>
+</head>
+<body>
+  <header class="header">
+    <a class="brand" href="#top"><b>OC</b> OTAKU<span>.</span>CLUB</a>
+    <button class="menu" id="menu" aria-label="Ouvrir le menu" aria-expanded="false">☰</button>
+    <nav id="nav"><a href="#catalogue" data-nav="new" class="active">Nouveautés</a><a href="#catalogue" data-nav="upcoming">À venir</a><a href="#catalogue" data-nav="catalogue">Catalogue complet</a><a href="#catalogue" data-nav="classics">Incontournables</a><a href="#catalogue" data-nav="favorites">Ma liste <i id="nav-count">0</i></a></nav>
+    <a class="header-cta" href="#catalogue">Trouver mon prochain anime <span>↗</span></a>
+    <button class="prefs-trigger" id="prefs-trigger" type="button" hidden>Mes goûts</button>
+    <button class="header-cta auth-trigger" id="auth-trigger" type="button">Se connecter</button>
+  </header>
+  <main id="top">
+    <section class="hero">
+      <div class="hero-copy"><p class="eyebrow"><i></i> TON GUIDE DE DÉCOUVERTE</p><h1>QUOI<br><em>REGARDER</em><br>ENSUITE ?</h1>
+        <p class="intro">Les nouveautés du moment, expliquées en quelques lignes. Et les grandes aventures qu’on ne se lasse jamais de recommander.</p>
+        <a class="explore" href="#catalogue">Trouver une recommandation <span>↓</span></a>
+        <div class="stats"><strong id="count">—</strong><small>recommandations</small><b></b><strong>3</strong><small>univers incontournables</small></div>
+      </div>
+      <div class="feature"><img id="hero-image" alt=""><span class="stamp">À<br>DÉCOUVRIR</span><div class="feature-bottom"><div><small id="hero-label">LE CHOIX DU CLUB</small><h2 id="hero-title">Chargement des découvertes…</h2></div><button id="hero-open" aria-label="Voir la fiche">↗</button></div></div>
+      <span class="side-note">ANIME · MANGA · COMMUNAUTÉ</span>
+    </section>
+    <section class="catalogue recommendations" id="recommendations" hidden>
+      <div class="overline"><span>TA PROCHAINE HISTOIRE</span><i></i><span>À PARTIR DE TES FAVORIS</span></div>
+      <div class="heading"><div><p class="eyebrow">DES UNIVERS QUI TE RESSEMBLENT</p><h2>PARCE QUE TU AS AIMÉ<span>.</span></h2></div><p>Des histoires choisies selon<br>les genres de tes favoris.</p></div>
+      <div class="grid" id="recommendation-grid"></div>
+    </section>
+    <section class="catalogue" id="catalogue">
+      <div class="overline"><span>DES HISTOIRES À ADOPTER</span><i></i><span id="season-label">NOUVEAUTÉS DE LA SAISON</span></div>
+      <div class="heading"><div><p class="eyebrow">CHOISIS TON PROCHAIN ANIME</p><h2 id="section-title">NOUVEAUTÉS<span>.</span></h2></div><p>Un aperçu rapide de chaque histoire<br>pour choisir selon tes envies.</p></div>
+      <div class="controls"><div class="tabs" role="tablist"><button class="selected" data-tab="new" role="tab" aria-selected="true">Nouveautés</button><button data-tab="upcoming" role="tab" aria-selected="false">À venir</button><button data-tab="catalogue" role="tab" aria-selected="false">Catalogue complet</button><button data-tab="classics" role="tab" aria-selected="false">Incontournables</button><button data-tab="favorites" role="tab" aria-selected="false">Ma liste <i id="fav-count">0</i></button></div>
+        <div class="filters"><label class="search"><span>⌕</span><input id="search" type="search" placeholder="Un titre, une vibe…" aria-label="Rechercher un anime"><kbd>/</kbd></label><label class="genre"><span class="sr-only">Genre</span><select id="genre"><option value="all">Tous les genres</option></select><b>⌄</b></label></div>
+      </div>
+      <p class="status" aria-live="polite"><i></i><span id="status">Chargement des titres…</span></p>
+      <div class="grid" id="grid" aria-live="polite"></div>
+      <div class="empty" id="empty" hidden><b>✳</b><h3>Rien dans le viseur.</h3><p>Essaie un autre titre ou change de filtre.</p><button id="reset">Réinitialiser les filtres ↗</button></div>
+      <div class="more-wrap"><button class="more" id="more">Charger plus <span>↓</span></button></div>
+    </section>
+    <section class="strip"><b>✳</b><p>UN ÉPISODE DE PLUS.<br><em>TOUJOURS.</em></p><small>FAIT POUR LES FANS, PAR LES FANS<br>DEPUIS LE PREMIER ÉPISODE</small></section>
+  </main>
+  <footer><a class="brand" href="#top"><b>OC</b> OTAKU<span>.</span>CLUB</a><span>Un club, mille univers.</span><a href="#top">Retour en haut ↑</a></footer>
+  <dialog id="dialog"><button class="close" id="close" aria-label="Fermer">×</button><div id="detail"></div></dialog>
+  <dialog id="auth-dialog" aria-labelledby="auth-title">
+    <button class="close" id="auth-close" aria-label="Fermer">×</button>
+    <form class="auth-form" id="auth-form">
+      <p class="eyebrow">OTAKU CLUB</p>
+      <h2 id="auth-title">Se connecter</h2>
+      <label for="auth-email">E-mail</label>
+      <input id="auth-email" name="email" type="email" autocomplete="email" required>
+      <label for="auth-password">Mot de passe</label>
+      <input id="auth-password" name="password" type="password" autocomplete="current-password" required>
+      <p class="auth-message" id="auth-message" role="status" aria-live="polite"></p>
+      <button class="auth-submit" id="auth-submit" type="submit">Se connecter</button>
+      <button class="auth-mode" id="auth-mode" type="button">Créer un compte</button>
+      <button class="auth-mode" id="auth-resend" type="button">Renvoyer l’e-mail</button>
+    </form>
+  </dialog>
+  <dialog id="preferences-dialog" aria-labelledby="preferences-title">
+    <button class="close" id="preferences-close" aria-label="Fermer">×</button>
+    <div class="preferences-invite" id="preferences-invite">
+      <p class="eyebrow">OTAKU CLUB</p>
+      <h2 id="preferences-title">Tes goûts, ton compte</h2>
+      <p>Connecte-toi pour enregistrer tes préférences et retrouver tes recommandations.</p>
+      <button class="auth-submit" id="preferences-login" type="button">Se connecter</button>
+    </div>
+    <form class="preferences-form" id="preferences-form" hidden>
+      <p class="eyebrow">TON PROFIL DE DÉCOUVERTE</p>
+      <h2 id="preferences-form-title">Qu’est-ce qui te plaît ?</h2>
+      <fieldset>
+        <legend>Genres préférés</legend>
+        <div class="genre-options" id="preference-genres">
+          <label><input type="checkbox" name="genres" value="Action"> Action</label>
+          <label><input type="checkbox" name="genres" value="Adventure"> Aventure</label>
+          <label><input type="checkbox" name="genres" value="Comedy"> Comédie</label>
+          <label><input type="checkbox" name="genres" value="Drama"> Drame</label>
+          <label><input type="checkbox" name="genres" value="Fantasy"> Fantasy</label>
+          <label><input type="checkbox" name="genres" value="Horror"> Horreur</label>
+          <label><input type="checkbox" name="genres" value="Mystery"> Mystère</label>
+          <label><input type="checkbox" name="genres" value="Romance"> Romance</label>
+          <label><input type="checkbox" name="genres" value="Sci-Fi"> Science-fiction</label>
+          <label><input type="checkbox" name="genres" value="Slice of Life"> Tranche de vie</label>
+          <label><input type="checkbox" name="genres" value="Sports"> Sport</label>
+          <label><input type="checkbox" name="genres" value="Supernatural"> Surnaturel</label>
+          <label><input type="checkbox" name="genres" value="Suspense"> Suspense</label>
+          <label><input type="checkbox" name="genres" value="Psychological"> Psychologique</label>
+          <label><input type="checkbox" name="genres" value="Isekai"> Isekai</label>
+          <label><input type="checkbox" name="genres" value="Music"> Musique</label>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Ambiance</legend>
+        <div class="choice-options">
+          <label><input type="radio" name="ambiance" value="legere" required> Légère</label>
+          <label><input type="radio" name="ambiance" value="sombre"> Sombre</label>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Format</legend>
+        <div class="choice-options">
+          <label><input type="radio" name="format" value="court" required> Court</label>
+          <label><input type="radio" name="format" value="long"> Long</label>
+        </div>
+      </fieldset>
+      <p class="preferences-message" id="preferences-message" role="status" aria-live="polite"></p>
+      <button class="auth-submit" id="preferences-submit" type="submit">Enregistrer mes préférences</button>
+    </form>
+  </dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
