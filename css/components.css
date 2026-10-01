@@ -207,6 +207,15 @@
 }
 
 @media (max-width: 650px) {
+  footer {
+    flex-wrap: wrap;
+  }
+
+  footer > span:nth-of-type(2) {
+    display: block;
+    flex: 1 0 100%;
+  }
+
   .header .auth-trigger {
     display: block;
     padding: 10px 12px;
